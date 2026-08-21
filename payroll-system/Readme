@@ -1,0 +1,29 @@
+
+FOR RUN PROJECT:
+venv\Scripts\activate
+This is env environment, pacakages will install inside env.
+
+python manage.py runserver
+
+FOR TESTING ISSUES:
+python manage.py check
+
+
+
+FOR DATABSE:
+psql -U postgres
+For open databse shell
+
+Database name fro this project payroll_db
+
+Password for databse: postgresuser
+
+
+
+
+
+FOR ADMIN CREDENTIAL:
+Username: admin
+Email address: admin@gmail.com
+Password: admin12345
+
