@@ -7,14 +7,18 @@ import { LogOut } from 'lucide-react';
 export default function LogoutButton() {
   const router = useRouter();
 
-  const handleLogout = () => {
-    // Clear auth tokens
-    Cookies.remove('access_token');
-    Cookies.remove('refresh_token');
+ const handleLogout = () => {
+  // Clear LocalStorage
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
 
-    // Redirect to login page
-    router.push('/login');
-  };
+  // Clear Cookies
+  Cookies.remove('access_token');
+  Cookies.remove('refresh_token');
+
+  // Redirect to Login
+  window.location.href = '/login';
+};
 
   return (
     <button

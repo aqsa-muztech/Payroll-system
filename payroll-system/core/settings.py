@@ -79,16 +79,31 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticated',
+        ),
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+import os
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'payroll_db',          # Apne PostgreSQL Database ka naam
+        'USER': 'postgres',              # Postgres username (default postgres hota hai)
+        'PASSWORD': 'postgresuser',      # Database password
+        'HOST': 'localhost',             # Local machine par hai to 'localhost' ya Cloud IP
+        'PORT': '5432',                  # Default PostgreSQL port
     }
 }
 
@@ -141,6 +156,7 @@ MAILERS = {
 
 
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
     "http://localhost:3001",
 ]
 

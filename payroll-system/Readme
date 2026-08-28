@@ -1,29 +1,82 @@
+# Payroll System – Setup and Development Guide
 
-FOR RUN PROJECT:
+## Project Setup
+
+### Activate the Virtual Environment
+
+Before running the project, activate the virtual environment:
+
+```bash
 venv\Scripts\activate
-This is env environment, pacakages will install inside env.
+```
 
+All Python packages and dependencies for the project should be installed inside this virtual environment.
+
+---
+
+## Run the Project
+
+Start the Django development server using:
+
+```bash
 python manage.py runserver
+```
 
-FOR TESTING ISSUES:
+The application will run on the local development server port 8000.
+
+---
+
+## Check for Issues
+
+To check the project for configuration errors or other issues, run:
+
+```bash
 python manage.py check
+```
 
+---
 
+## Database Configuration
 
-FOR DATABSE:
+### Open PostgreSQL Shell
+
+Use the following command to open the PostgreSQL shell:
+
+```bash
 psql -U postgres
-For open databse shell
+```
 
-Database name fro this project payroll_db
+### Database Details
 
-Password for databse: postgresuser
+* **Database Name:** `payroll_db`
+* **Database User:** `postgres`
+* **Database Password:** `postgresuser`
 
+---
 
+## Super Admin Credentials (Admin App)
 
+Use the following credentials to access the Django super admin panel:
 
+* **Username:** `admin`
+* **Email:** `admin@gmail.com`
+* **Password:** `admin12345`
 
-FOR ADMIN CREDENTIAL:
-Username: admin
-Email address: admin@gmail.com
-Password: admin12345
+---
+
+## Update the Database
+
+After making changes to the models, create and apply migrations using:
+
+```bash
+python manage.py makemigrations authentication
+```
+
+Then run:
+
+```bash
+python manage.py migrate
+```
+
+This will update the database schema according to the latest model changes.
 

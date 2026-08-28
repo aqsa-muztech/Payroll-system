@@ -6,7 +6,11 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = Cookies.get('access_token');
+  // Check localStorage first, fallback to Cookie if not present
+  const token = typeof window !== 'undefined' 
+    ? localStorage.getItem('access_token') || Cookies.get('access_token')
+    : null;
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

@@ -1,10 +1,31 @@
-from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from authentication.views import get_current_user, create_employee
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenRefreshView
+
 
 urlpatterns = [
-    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/auth/me/', get_current_user, name='get_current_user'),
-    path('api/admin/employees/create/', create_employee, name='create_employee'),
+    # Django Admin
+    path(
+        "django-admin/",
+        admin.site.urls
+    ),
+
+    # Super Admin Portal
+    path(
+        "api/admin/",
+        include("authentication.admin.urls")
+    ),
+
+    # Client Portal
+    path(
+        "api/client/",
+        include("authentication.client.urls")
+    ),
+
+    # JWT Refresh
+    path(
+        "api/auth/token/refresh/",
+        TokenRefreshView.as_view(),
+        name="token_refresh"
+    ),
 ]

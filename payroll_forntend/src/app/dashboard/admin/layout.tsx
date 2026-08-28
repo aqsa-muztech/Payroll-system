@@ -9,7 +9,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="space-y-6">
           <h1 className="text-xl font-bold tracking-wider">PAYROLL SYSTEM</h1>
           <nav className="space-y-2 text-sm">
-            <a href="/dashboard" className="block p-2 rounded bg-slate-800 font-medium">Dashboard</a>
+            <a href="/dashboard/admin" className="block p-2 rounded bg-slate-800 font-medium">Dashboard</a>
             <a href="/dashboard/admin/employees" className="block p-2 rounded hover:bg-slate-800 text-gray-400">Employees</a>
             <a href="/dashboard/admin/payroll" className="block p-2 rounded hover:bg-slate-800 text-gray-400">Payroll Runs</a>
             <a href="/dashboard/admin/settings" className="block p-2 rounded hover:bg-slate-800 text-gray-400">Settings</a>
