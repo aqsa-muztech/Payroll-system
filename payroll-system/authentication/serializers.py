@@ -1,7 +1,8 @@
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from authentication.models import User, Organization
+from authentication.models import User, Organization, EmployeeProfile, SalaryStructure
 
 
 # ============================================================
@@ -145,3 +146,70 @@ class ClientLoginSerializer(serializers.Serializer):
                 },
             },
         }
+
+
+# ============================================================
+# CREATE EMPLOYEE (User + Profile + Salary Structure)
+# ============================================================
+class CreateEmployeeSerializer(serializers.ModelSerializer):
+    # User Credentials
+    email = serializers.EmailField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
+
+    # Initial Salary Input
+    gross_salary = serializers.DecimalField(
+        max_digits=12, decimal_places=2, write_only=True
+    )
+
+    class Meta:
+        model = EmployeeProfile
+        fields = [
+            'email', 'password', 'first_name', 'last_name',
+            'org_emp_code', 'designation', 'band', 'department', 'manager_name',
+            'dob', 'gender', 'father_husband_name', 'cnic', 'city', 'province',
+            'doj', 'dos', 'gross_salary'
+        ]
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        org = request.user.organization
+
+        email = validated_data.pop('email').strip().lower()
+        password = validated_data.pop('password')
+        first_name = validated_data.pop('first_name')
+        last_name = validated_data.pop('last_name')
+        gross_salary = validated_data.pop('gross_salary')
+
+        with transaction.atomic():
+            # 1. Base User Account Create Karein
+            user = User.objects.create_user(
+                username=email,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                role=User.Roles.EMPLOYEE,
+                organization=org
+            )
+
+            # 2. System Code Auto-generate Karein (e.g., EMP-0001)
+            emp_count = EmployeeProfile.objects.filter(organization=org).count() + 1
+            system_emp_code = f"EMP-{emp_count:04d}"
+
+            # 3. Employee Profile Save Karein
+            profile = EmployeeProfile.objects.create(
+                user=user,
+                organization=org,
+                system_emp_code=system_emp_code,
+                **validated_data
+            )
+
+            # 4. Salary Structure Create Karein (Save method breakdown auto calculate kar dega)
+            SalaryStructure.objects.create(
+                employee=profile,
+                gross_salary=gross_salary
+            )
+
+            return profile
