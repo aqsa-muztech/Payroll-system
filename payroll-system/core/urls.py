@@ -22,6 +22,9 @@ urlpatterns = [
         include("authentication.client.urls")
     ),
 
+    # Payroll API
+    path("api/payroll/", include("payroll.urls")),
+
     # JWT Refresh
     path(
         "api/auth/token/refresh/",

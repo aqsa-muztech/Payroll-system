@@ -26,6 +26,18 @@ The application will run on the local development server port 8000.
 
 ---
 
+## Create new app
+
+To check create a new app run this command, run:
+
+```bash
+python manage.py startapp payroll
+```
+here payroll is a new app name, we will replace it with original name.
+---
+
+---
+
 ## Check for Issues
 
 To check the project for configuration errors or other issues, run:

@@ -4,7 +4,8 @@ import re
 from django.db import transaction
 from rest_framework import serializers
 
-from authentication.models import User, EmployeeProfile, SalaryStructure
+from authentication.models import User, EmployeeProfile
+from payroll.models import SalaryStructure
 
 
 class CreateEmployeeSerializer(serializers.ModelSerializer):
